@@ -1,0 +1,88 @@
+﻿Async Lambdas
+They work asyncronusly and you dont have to await it.
+
+LockCase
+https://michaelscodingspot.com/c-deadlocks-in-depth-part-1/
+1. deadlock is when two critical sections wait for each other.
+2. to solve deadlock you can: 
+2.1 Now, to solve it by nesting the locks in the same order, we need to change:
+2.2 use timeout
+3. use a little code inside of lock section
+
+ConfigureAwait
+https://docs.microsoft.com/en-us/archive/msdn-magazine/2011/february/msdn-magazine-parallel-computing-it-s-all-about-the-synchronizationcontext
+https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f
+1. UI can be chagned only from UI thread.
+2. If UI thread locked - there is no possibility to change UI.
+3. The UI Thread has a message queue to receive notifications/actions to perform.
+4. If there is a SynchronizationContext (i.e. we are in the UI thread)
+the code after an await will run in the original thread context. This is the default and expected behaviour.
+5. Use ContinueWith to perform operations (most of all to change UI) not in Task, which is completed on CLR thread, but on UI thread.
+
+Version 2.0 of the .NET Framework contained many sweeping changes. One of the major improvements was introducing asynchronous pages to the 
+ASP.NET architecture. Prior to the .NET Framework 2.0, every ASP.NET request needed a thread until the request was completed.
+This was an inefficient use of threads, because creating a Web page often depends on database queries and calls to Web services, 
+and the thread handling that request would have to wait until each of those operations finished. With asynchronous pages, the thread 
+handling the request could begin each of the operations and then return back to the ASP.NET thread pool;
+when the operations finished, another thread from the ASP.NET thread pool would complete the request.
+
+One aspect of SynchronizationContext is that it provides a way to queue a unit of work to a context
+
+Another aspect of SynchronizationContext is that every thread has a “current” context. A thread’s context isn’t necessarily unique; its context instance may be shared with other threads.
+It’s possible for a thread to change its current context, but this is quite rare.
+
+A third aspect of SynchronizationContext is that it keeps a count of outstanding asynchronous operations
+
+--Sync context
+http://hamidmosalla.com/2018/06/24/what-is-synchronizationcontext/
+SynchronizationContext is a representation of the current environment that our code is running in.
+But the important question is, why do we need to capture the current location or environment before moving to another thread? The answer is,
+there might be a lot of reasons, and there might be none.
+The general reason is that we need a way to communicate between threads.
+
+What happens in the above code is that some piece of code after await is executed as a continuation block.
+Now imagine this continuation run on another thread. Now some operations can be done on other threads,
+and some can’t. The things is, for those operations that is not allowed, we need to execute the continuation
+part in the context of the calling thread. That why we need a representation of the location that caller issued the call to another thread.
+
+task.continueWith might be used to perform operations on particular context (for instance, on calling thread context (UI))
+1. capture context, call task, 
+2. ThreadPool.QueueUserWorkItem
+3. call task there
+4. call sc.Post() to perform operation on calling thread context.
+
+return Task.Run(async () => {
+                await Task.Delay(2000);
+                return new Person { Id = 1 };
+            });
+
+async lambda works in the same way as usual async await, but in task context.
+
+ConfigureAwait - https://medium.com/bynder-tech/c-why-you-should-use-configureawait-false-in-your-library-code-d7837dce3d7f
+
+Have to write ConfigureAwait(false) to indicate that task will perform not on called SyncronizationContext.
+Simple example if we call SomeTaskAsync().Result, ui thread will be blocked as task will perform on called context.
+but if we write await SomeTaskAsync().ConfigureAwait(false), everything is gonna be ok.
+Task.Result blocks calling context and cannot complete execution. Use or ConfigureAwait(false)
+to complete task on another sync context or never use Task.Result. 
+https://devblogs.microsoft.com/pfxteam/await-synchronizationcontext-and-console-apps/
+
+Streams: 
+Stream is the abstract base class of all streams. A stream is an abstraction of a sequence of bytes, 
+such as a file, an input/output device, an inter-process communication pipe, or a TCP/IP socket.
+The Stream class and its derived classes provide a generic view of these different types of input and output,
+and isolate the programmer from the specific details of the operating system and the underlying devices.
+
+You can read from streams. Reading is the transfer of data from a stream into a data structure, such as an array of bytes.
+
+You can write to streams. Writing is the transfer of data from a data structure into a stream.
+
+Streams can support seeking. Seeking refers to querying and modifying the current position within a stream.
+Seek capability depends on the kind of backing store a stream has.
+For example, network streams have no unified concept of a current position, and therefore typically do not support seeking.
+
+Disposing a Stream object flushes any buffered data, and essentially calls the Flush method for you.
+Dispose also releases operating system resources such as file handles, network connections, or memory used for any internal buffering.
+The BufferedStream class provides the capability of wrapping a buffered stream around another stream in order to improve read and write performance.
+StreamReader/StreamWriter are used for reading data from (.txt) files character by character.
+

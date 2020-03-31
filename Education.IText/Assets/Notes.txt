@@ -1,0 +1,1 @@
+﻿1. PdfWriter does not know what to write. It just writes different parts of a passed doc.
