@@ -24,11 +24,45 @@ namespace Education.Cases {
         private PersonData() { }
     }
 
+    public interface IAsyncInit {
+        Task Initialization { get; }
+    }
+
+    public class AsyncInit : IAsyncInit {
+        public Task Initialization { get; }
+        public string State { get; set; }
+
+        public AsyncInit() {
+            Initialization = InitizalizeAsync();
+        }
+
+        private async Task InitizalizeAsync() {
+            await Task.Delay(2000);
+            State = "Some state";
+        }
+
+    }
+
     public class AsyncInitCase : ICase {
         public async Task RunAsync() {
-            var instance = PersonData.GetInstanceAsync().Status;
+            //await InitAsync();
+            try {
+                await ThrowException();
+            } catch {
+                var a = 1;
+            }
 
             Console.WriteLine("End of the run async.");
+        }
+
+        private async Task InitAsync() {
+            var instance = new AsyncInit();
+            await Task.Delay(3000);
+        }
+
+        private async Task ThrowException() {
+            //throw new Exception("From async void method.");
+            await Task.FromException(new Exception("From async."));
         }
     }
 }
