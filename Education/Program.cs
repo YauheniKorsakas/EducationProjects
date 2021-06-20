@@ -1,16 +1,19 @@
-﻿using Education.Cases;
+﻿using Education.Cases.Algos;
 using Education.Core;
 using System;
 using System.Threading.Tasks;
 
-namespace Education {
-    public class Program {
-        public static async Task Main(string[] args) {
-            await CaseRunner.RunCaseAsync<MiscCase>();
+namespace Education
+{
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            await CaseRunner.RunCaseAsync<HashCase>();
 
             Console.ReadKey();
         }
 
-        private static ICase GetCaseInstance<T>() where T: ICase, new() => Activator.CreateInstance<T>();
+        private static ICase GetCaseInstance<T>() where T : ICase, new() => Activator.CreateInstance<T>();
     }
 }

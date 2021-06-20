@@ -10,10 +10,11 @@ using Education.Web.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using Education.Web.Filters;
+using System;
 
 namespace Education.Web.Controllers {
     [Route("/api/[controller]")]
-    // [ApiController]
+    [ApiController]
     public class DataController : ControllerBase {
         private IDataService _dataService;
         private IConfiguration _configuration;

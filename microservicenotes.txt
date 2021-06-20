@@ -1,0 +1,7 @@
+In a microservice-based architecture, the application is built on a collection of services that can be developed, tested, deployed, and versioned independently.
+Containerization is an approach to software development in which an application or service, its dependencies, and its configuration (abstracted as deployment manifest files)
+are packaged together as a container image.
+The containerized application can be tested as a unit and deployed as a container image instance to the host operating system (OS).
+Containers also isolate applications from each other on a shared OS.
+Docker is an open-source project for automating the deployment of applications as portable, self-sufficient containers that can run on the cloud or on-premises.
+

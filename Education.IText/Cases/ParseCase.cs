@@ -1,17 +1,10 @@
-﻿using iText.Kernel.Geom;
-using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Parser;
-using iText.Kernel.Pdf.Canvas.Parser.Data;
-using iText.Kernel.Pdf.Canvas.Parser.Filter;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
-using iText.Layout;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 
-namespace Education.IText.Cases {
+namespace Education.IText.Cases
+{
     public class Order {
         public string OrderDate { get; set; }
         public string Confirmation { get; set; }

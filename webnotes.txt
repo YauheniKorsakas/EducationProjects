@@ -1,0 +1,5 @@
+https://metanit.com/sharp/aspnet5/5.7.php
+
+1.If return image, than all response is image/(jpg, btm, gif, etc.).
+PhysicalPathResult;
+2. As FileResult (read bytes and pass them in File())

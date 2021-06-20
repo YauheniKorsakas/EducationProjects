@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Education.Web {
     public class Program {
@@ -19,6 +18,7 @@ namespace Education.Web {
                     var env = hostingContext.HostingEnvironment;
 
                     config
+                        .SetBasePath(env.ContentRootPath)
                         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
                 })
@@ -30,6 +30,7 @@ namespace Education.Web {
                 })
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseIISIntegration();
                     webBuilder.ConfigureKestrel(options => {
                         //options.Limits = new Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerLimits { }
                     });
