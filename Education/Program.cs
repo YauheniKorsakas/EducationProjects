@@ -1,4 +1,5 @@
-﻿using Education.Cases.Algos;
+﻿using Education.Cases;
+using Education.Cases.Algos;
 using Education.Core;
 using System;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<HashCase>();
+            await CaseRunner.RunCaseAsync<MiscCase>();
 
             Console.ReadKey();
         }
