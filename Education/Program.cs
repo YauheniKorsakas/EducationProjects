@@ -3,6 +3,7 @@ using Education.Cases.Algos;
 using Education.Core;
 using System;
 using System.Threading.Tasks;
+using Education.Cases.HttpResponseCase;
 
 namespace Education
 {
@@ -10,7 +11,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<MiscCase>();
+            await CaseRunner.RunCaseAsync<StructureCase>();
 
             Console.ReadKey();
         }

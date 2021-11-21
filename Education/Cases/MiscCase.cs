@@ -7,21 +7,9 @@ using System.Linq;
 namespace Education.Cases {
     public class MiscCase : ICase
     {
-        public Task RunAsync() {
-            Person.Count++;
-            Console.WriteLine(Employee.Count);
-
-            return Task.CompletedTask;
+        public async Task RunAsync() {
+            Console.WriteLine(Guid.NewGuid());
+            Console.WriteLine((long)Guid.NewGuid().GetHashCode());
         }
-    }
-
-    public class Person
-    {
-        public static int Count { get; set; } = 1;
-    }
-
-    public class Employee : Person
-    {
-
     }
 }
