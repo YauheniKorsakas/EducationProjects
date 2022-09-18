@@ -1,0 +1,25 @@
+{
+  "Version": 1,
+  "TestProjectNameFormat": "$ProjectName$.Test",
+  "FileNameTemplate": "$ClassName$Tests",
+  "CustomMockFieldDeclarationTemplate": "private $CustomMockClass$ $InterfaceMockName.CamelCase$;",
+  "CustomMockFieldInitializationTemplate": "$InterfaceMockName.CamelCase$Mock = new $CustomMockClass$();",
+  "CustomMockObjectReferenceTemplate": "$InterfaceMockName.CamelCase$Mock",
+  "Templates": {
+    "NUnit_None_TestMethodName": "$TestedMethodName$_When_StateUnderTest_Should_ExpectedBehavior",
+    "NUnit_None_TestMethodInvocation": "[Test]\r\npublic $AsyncModifier$ $AsyncReturnType$ $TestMethodName$()\r\n{\r\n\tvar $ClassNameShort.CamelCase$ = $TodoConstructor$;\r\n\t$ParameterSetupDefaults.NewLineIfPopulated$\t\r\n\t\r\n\t$MethodInvocationPrefix$$ClassNameShort.CamelCase$$MethodInvocation$;\r\n\t\r\n\tAssert.Fail();\r\n}",
+    "NUnit_None_TestMethodEmpty": "[Test]\r\npublic void TestMethod1()\r\n{\r\n\tvar $ClassNameShort.CamelCase$ = $TodoConstructor$;\r\n\t\r\n\tAssert.Fail();\r\n}",
+    "VisualStudio_None_TestMethodEmpty": "",
+    "VisualStudio_None_TestMethodInvocation": "",
+    "VisualStudio_None_TestMethodName": "$TestedMethodName$_When_StateUnderTest_Should_ExpectedBehavior",
+    "VisualStudio_None_File": "$UsingStatements$\r\n\r\nnamespace $Namespace$\r\n{\r\n\t[TestClass]\r\n\tpublic class $ClassName$Tests\r\n\t{\r\n\t\t[SetUp]\r\n\t\tpublic void Setup() \r\n{\r\n\tSetupData();\r\n\tSetupMocks();\r\n}\r\n\r\n\t\t$TestMethods$\r\n\t}\r\n}\r\n",
+    "VisualStudio_Moq_File": "$UsingStatements$\r\n\r\nnamespace $Namespace$\r\n{\r\n\t[TestClass]\r\n\tpublic class $ClassName$Tests\r\n\t{\r\n\t\tprivate MockRepository mockRepository;\r\n\t\t$MockFieldDeclarations$\r\n\t\t\r\n\t\t[TestInitialize]\r\n\t\tpublic void TestInitialize()\r\n\t\t{\r\n\t\t\tthis.mockRepository = new MockRepository(MockBehavior.Strict);\r\n\t\t\t\r\n\t\t\t$MockFieldInitializations$\r\n\t\t}\r\n\t\t\r\n\t\tprivate $ClassName$ Create$ClassNameShort$()\r\n\t\t{\r\n\t\t\treturn $ExplicitConstructor$;\r\n\t\t}\r\n\t\t\r\n\t\t$TestMethods$\r\n\t}\r\n}\r\n",
+    "NUnit_Moq_File": "$UsingStatements$\r\n\r\nnamespace $Namespace$\r\n{\r\n\t[TestFixture]\r\n\tpublic class $ClassName$Tests\r\n\t{\r\n\t\tprivate $ClassName$ $ClassName.CamelCase$;\r\n\t\tprivate MockRepository mockRepository;\r\n\t\t$MockFieldDeclarations$\r\n\t\t\r\n\t\t[SetUp]\r\n\t\tpublic void Setup()\r\n\t\t{\r\n\t\t\tSetupData();\r\n\t\t\tSetupMocks();\r\n\t\t}\r\n\t\t\r\n\t\t$TestMethods$\r\n\r\n\t\tprivate $ClassName$ Build$ClassNameShort$() =>\r\n\t\t\t$ExplicitConstructor$;\r\n\r\n\t\tprivate void SetupData()\r\n\t\t{\r\n\t\t\tmockRepository = new MockRepository(MockBehavior.Default);\r\n\t\t\t$MockFieldInitializations$\r\n\t\t\t$ClassName.CamelCase$ = Build$ClassNameShort$();\r\n\t\t}\r\n\r\n\t\tprivate void SetupMocks()\r\n\t\t{\r\n\t\t}\r\n\t}\r\n}\r\n",
+    "NUnit_Moq_MockFieldDeclaration": "private Mock<$InterfaceType$> $InterfaceMockName.CamelCase$Mock;",
+    "NUnit_Moq_MockFieldInitialization": "$InterfaceMockName.CamelCase$Mock = mockRepository.Create<$InterfaceType$>();",
+    "NUnit_Moq_MockObjectReference": "$InterfaceMockName.CamelCase$Mock.Object",
+    "NUnit_Moq_TestMethodName": "$TestedMethodName$_When_StateUnderTest_Should_ExpectedBehavior",
+    "NUnit_Moq_TestMethodInvocation": "[Test]\r\npublic $AsyncModifier$ $AsyncReturnType$ $TestMethodName$()\r\n{\r\n\t\r\n}",
+    "NUnit_Moq_TestMethodEmpty": "[Test]\r\npublic void TestMethod1()\r\n{\r\n\t\r\n}"
+  }
+}

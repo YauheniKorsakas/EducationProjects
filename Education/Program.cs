@@ -11,7 +11,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<StructureCase>();
+            await CaseRunner.RunCaseAsync<DownloadAndSaveWebPagesCase>();
 
             Console.ReadKey();
         }

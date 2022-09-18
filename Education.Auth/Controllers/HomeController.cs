@@ -11,6 +11,18 @@ namespace Education.Auth.Controllers
         [HttpGet("GetCurrentUser")]
         public string GetCurrentUser() {
             return User.Identity.Name;
+           
+        }
+
+        private static void GenerateObjects() {
+            for (int i = 0; i < 4; i++) {
+                var a = 1;
+                var b = 2;
+
+                for (int j = 0; j < 5; j++) {
+
+                }
+            }
         }
 
         [HttpGet("session")]

@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Education.Angular.Controllers
+namespace Education.SwaggerPlayground.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -22,7 +22,7 @@ namespace Education.Angular.Controllers
             _logger = logger;
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public IEnumerable<WeatherForecast> Get() {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast {
@@ -31,16 +31,6 @@ namespace Education.Angular.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }
-
-        [HttpGet("get-data")]
-        public IActionResult GetData() {
-            return RedirectToAction("GetName");
-        }
-
-        [HttpGet("get-name")]
-        public IActionResult GetName() {
-            return Ok("Zheka");
         }
     }
 }

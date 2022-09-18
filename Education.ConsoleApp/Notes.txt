@@ -1,0 +1,13 @@
+﻿Constants are fields whose value is set at compile time and cannot be changed.
+Properties are methods on a class that are accessed as if they were fields on that class.
+Methods define the actions that a class can perform.
+
+provide notifications about occurrences, such as button clicks or the successful completion of
+a method, to other objects. Events are defined and triggered by using delegates.
+
+Overloaded operators are considered type members.
+enable an object to be indexed in a manner similar to arrays.
+Constructors are methods that are called when the object is first created. They are often used to initialize the data of an object.
+Finalizers are used very rarely in C#. They are methods that are called by the runtime execution engine when the object is about to be removed from memory.
+They are generally used to make sure that any resources which must be released are handled appropriately.
+Nested types are types declared within another type

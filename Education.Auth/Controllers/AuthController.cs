@@ -30,13 +30,13 @@ namespace Education.Auth.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterModel registerModel) {
             var existingUser = dbContext.Users.FirstOrDefault(user => user.Username == registerModel.Username);
 
-            if (existingUser == null) {
+            if (existingUser is null) {
                 var newUser = new User { Username = registerModel.Username, Password = registerModel.Password };
                 dbContext.Users.Add(newUser);
                 await dbContext.SaveChangesAsync();
                 await Authenticate(registerModel.Username);
 
-                return Ok("Successfully logged in.");
+                return Ok("Successfully logged in."); 
             }
 
             return BadRequest("User already exists.");

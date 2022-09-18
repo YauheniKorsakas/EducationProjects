@@ -1,0 +1,92 @@
+﻿Configure And ConfigureServices methods are called only once when the app starts.
+
+The ConfigureServices method is:
+
+Optional.
+Called by the host before the Configure method to configure the app's services.
+Where configuration options are set by convention.
+
+The Configure method is used to specify how the app responds to HTTP requests.
+The request pipeline is configured by adding middleware components to an IApplicationBuilder instance.
+IApplicationBuilder is available to the Configure method, but it isn't registered in the service container.
+Hosting creates an IApplicationBuilder and passes it directly to Configure.
+
+Each Use extension method adds one or more middleware components to the request pipeline. For instance, UseStaticFiles configures middleware to serve static files.
+
+Each middleware component in the request pipeline is responsible for invoking the next component in the pipeline or short-circuiting the chain, if appropriate.
+
+The root service provider is created when BuildServiceProvider is called. The root service provider's lifetime corresponds to the app/server's lifetime when the provider starts with the app
+and is disposed when the app shuts down.
+
+Disposal of services
+The container calls Dispose for the IDisposable types it creates. If an instance is added to the container by user code, it isn't disposed automatically.
+
+Chain multiple request delegates together with Use. The next parameter represents the next delegate in the pipeline.
+You can short-circuit the pipeline by not calling the next parameter.
+You can typically perform actions both before and after the next delegate, as the following example demonstrates:
+
+C#
+
+Copy
+public class Startup
+{
+    public void Configure(IApplicationBuilder app)
+    {
+        app.Use(async (context, next) =>
+        {
+            // Do work that doesn't write to the Response.
+            await next.Invoke();
+            // Do logging or other work that doesn't write to the Response.
+        });
+
+        app.Run(async context =>
+        {
+            await context.Response.WriteAsync("Hello from 2nd delegate.");
+        });
+    }
+}
+When a delegate doesn't pass a request to the next delegate, it's called short-circuiting the request pipeline.
+
+The order that middleware components are added in the Startup.Configure method defines the order in which the middleware components are
+invoked on requests and the reverse order for the response.
+The order is critical for security, performance, and functionality.
+
+Exception/error handling
+When the app runs in the Development environment:
+Developer Exception Page Middleware (UseDeveloperExceptionPage) reports app runtime errors.
+Database Error Page Middleware reports database runtime errors.
+When the app runs in the Production environment:
+Exception Handler Middleware (UseExceptionHandler) catches exceptions thrown in the following middlewares.
+HTTP Strict Transport Security Protocol (HSTS) Middleware (UseHsts) adds the Strict-Transport-Security header.
+HTTPS Redirection Middleware (UseHttpsRedirection) redirects HTTP requests to HTTPS.
+Static File Middleware (UseStaticFiles) returns static files and short-circuits further request processing.
+Cookie Policy Middleware (UseCookiePolicy) conforms the app to the EU General Data Protection Regulation (GDPR) regulations.
+Routing Middleware (UseRouting) to route requests.
+Authentication Middleware (UseAuthentication) attempts to authenticate the user before they're allowed access to secure resources.
+Authorization Middleware (UseAuthorization) authorizes a user to access secure resources.
+Session Middleware (UseSession) establishes and maintains session state. If the app uses session state, call Session Middleware after Cookie Policy Middleware and before MVC Middleware.
+Endpoint Routing Middleware (UseEndpoints with MapRazorPages) to add Razor Pages endpoints to the request pipeline.
+
+UseExceptionHandler is the first middleware component added to the pipeline. Therefore, the Exception Handler Middleware catches any exceptions that occur in later calls.
+Static File Middleware is called early in the pipeline so that it can handle requests and short-circuit without going through the remaining components. 
+
+For Single Page Applications (SPAs), the SPA middleware UseSpaStaticFiles usually comes last in the middleware pipeline. The SPA middleware comes last:
+
+To allow all other middlewares to respond to matching requests first.
+To allow SPAs with client-side routing to run for all routes that are unrecognized by the server app.
+Map or MapWhen allows to insert additional logic with request/response if pipeline meets specified route.
+
+HOST DEFINITION
+A host is an object that encapsulates an app's resources, such as:
+
+Dependency injection (DI)
+Logging
+Configuration
+IHostedService implementations
+When a host starts, it calls IHostedService.StartAsync on each implementation of IHostedService that it finds in the DI container
+
+The host is typically configured, built, and run by code in the Program class
+
+CancellationToken.Registser - to register callback when cancellation token has been requested to cancel.
+
+Always write ProducesResponseType in controller action and return ActionResult<T> as it allows to return whether http status code or a specific type.
