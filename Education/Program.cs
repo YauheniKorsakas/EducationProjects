@@ -4,6 +4,8 @@ using Education.Core;
 using System;
 using System.Threading.Tasks;
 using Education.Cases.HttpResponseCase;
+using Education.Cases.SeniorPreparation;
+using Education.Cases.Patterns;
 
 namespace Education
 {
@@ -11,8 +13,9 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<DownloadAndSaveWebPagesCase>();
-
+            // await CaseRunner.RunCaseAsync<TaskCase>();
+            var singletone = Singletone.Instance;
+            Console.WriteLine(singletone.CreationDate);
             Console.ReadKey();
         }
 

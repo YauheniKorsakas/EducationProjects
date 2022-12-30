@@ -119,6 +119,7 @@ namespace Education.Cases
     public class Person
     {
         public string Name { get; set; }
+        public int Age { get; set; }
     }
 
     public record Header(string Title, string FullName)
