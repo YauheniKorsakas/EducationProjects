@@ -11,6 +11,7 @@ using Education.Cases.Patterns.Creational.Builder;
 using Education.Cases.Patterns.Creational.FactoryMethod;
 using Education.Cases.Patterns.Creational.Prototype;
 using Education.Cases.Patterns.Creational.Singletone;
+using Education.Cases.Patterns.Structural.Adapter;
 
 namespace Education
 {
@@ -18,7 +19,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<SingletoneCase>();
+            await CaseRunner.RunCaseAsync<AdapterCase>();
             
             Console.ReadKey();
         }
