@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Education.Cases.HttpResponseCase;
 using Education.Cases.SeniorPreparation;
 using Education.Cases.Patterns;
+using Education.Cases.Patterns.AbstractFactory;
 
 namespace Education
 {
@@ -13,9 +14,8 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            // await CaseRunner.RunCaseAsync<TaskCase>();
-            var singletone = Singletone.Instance;
-            Console.WriteLine(singletone.CreationDate);
+            await CaseRunner.RunCaseAsync<AbstractFactoryCase>();
+            
             Console.ReadKey();
         }
 

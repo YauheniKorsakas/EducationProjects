@@ -13,9 +13,29 @@ namespace Education.Cases
     public class MiscCase : ICase
     {
         public async Task RunAsync() {
-            var res = RNGCryptoServiceProvider.Create();
-            var prohibition = new { };
-            var a = 1;
+            var arr = new[] { 1, (object)null };
+            Console.WriteLine(arr.Length);
         }
+    }
+}
+public class Solution
+{
+    public int[] TwoSum(int[] nums, int target) {
+        int[] result = null;
+        var dict = new Dictionary<int, int>();
+        var str = "s";
+        var queue = new Queue<int>();
+        var hashset = new HashSet<int>();
+        hashset.Count();
+
+        for (var i = 0; i < nums.Length; i++) {
+            for (var j = 0; j < nums.Length; j++) {
+                if (i != j && (nums[i] + nums[j]) == target) {
+                    result = new[] { i, j };
+                }
+            }
+        }
+
+        return result;
     }
 }

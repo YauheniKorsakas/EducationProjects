@@ -13,13 +13,13 @@ begin try
 			begin transaction @tranName
 				insert into dbo.Priviliges values
 					(7, 'lol', 3)
-			commit transaction @tranName;
+	commit transaction @tranName;
 
-		insert into dbo.Priviliges values
-			(8, 'lol', 3)
-		print 'final result'
+	insert into dbo.Priviliges values
+		(8, 'lol', 3)
+	print 'final result'
 
-		select * from dbo.Priviliges
+	select * from dbo.Priviliges
 end try
 begin catch
 	if @@trancount > 0
