@@ -9,6 +9,7 @@ using Education.Cases.Patterns;
 using Education.Cases.Patterns.AbstractFactory;
 using Education.Cases.Patterns.Builder;
 using Education.Cases.Patterns.FactoryMethod;
+using Education.Cases.Patterns.Prototype;
 
 namespace Education
 {
@@ -16,11 +17,9 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<FactoryMethodCase>();
+            await CaseRunner.RunCaseAsync<PrototypeCase>();
             
             Console.ReadKey();
         }
-
-        private static ICase GetCaseInstance<T>() where T : ICase, new() => Activator.CreateInstance<T>();
     }
 }
