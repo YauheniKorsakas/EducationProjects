@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Education.Cases.Patterns.FactoryMethod
+namespace Education.Cases.Patterns.Creational.FactoryMethod
 {
     public class FactoryMethodCase : ICase
     {

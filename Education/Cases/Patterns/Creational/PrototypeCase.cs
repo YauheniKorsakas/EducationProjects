@@ -1,7 +1,7 @@
 ﻿using Education.Core;
 using System.Threading.Tasks;
 
-namespace Education.Cases.Patterns.Prototype
+namespace Education.Cases.Patterns.Creational.Prototype
 {
     public class PrototypeCase : ICase {
         public async Task RunAsync() {

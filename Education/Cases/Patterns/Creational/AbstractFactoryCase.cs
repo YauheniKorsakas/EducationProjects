@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Education.Cases.Patterns.AbstractFactory
+namespace Education.Cases.Patterns.Creational.AbstractFactory
 {
     public class AbstractFactoryCase : ICase
     {

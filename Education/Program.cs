@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Education.Cases.HttpResponseCase;
 using Education.Cases.SeniorPreparation;
 using Education.Cases.Patterns;
-using Education.Cases.Patterns.AbstractFactory;
-using Education.Cases.Patterns.Builder;
-using Education.Cases.Patterns.FactoryMethod;
-using Education.Cases.Patterns.Prototype;
+using Education.Cases.Patterns.Creational.AbstractFactory;
+using Education.Cases.Patterns.Creational.Builder;
+using Education.Cases.Patterns.Creational.FactoryMethod;
+using Education.Cases.Patterns.Creational.Prototype;
+using Education.Cases.Patterns.Creational.Singletone;
 
 namespace Education
 {
@@ -17,7 +18,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<PrototypeCase>();
+            await CaseRunner.RunCaseAsync<SingletoneCase>();
             
             Console.ReadKey();
         }

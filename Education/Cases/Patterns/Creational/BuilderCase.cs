@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Education.Cases.Patterns.Builder
+namespace Education.Cases.Patterns.Creational.Builder
 {
     public class BuilderCase : ICase
     {
