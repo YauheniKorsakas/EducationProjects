@@ -1,6 +1,7 @@
 ﻿using Education.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Education.Cases.Patterns.FactoryMethod
@@ -8,43 +9,37 @@ namespace Education.Cases.Patterns.FactoryMethod
     public class FactoryMethodCase : ICase
     {
         public async Task RunAsync() {
-            var handlers = new List<BaseDeviceHandler> {
-                new MobileDeviceHandler(),
-                new LaptopDeviceHandler()
+            var producers = new List<BaseDeviceProducer> {
+                new MobileDevideProducer(),
+                new LaptopDeviceProducer()
             };
-            handlers.ForEach(item => item.Handle());
+            var producedDevices = producers.Select(s => s.GetDevice());
+            
+            foreach (var device in producedDevices) {
+                Console.WriteLine($"{device.GetType().Name}");
+            }
         }
     }
 
-    public abstract class BaseDeviceHandler {
-        public string Name { get; set; }
-
-        public void Handle() {
-            var device = GetDevice();
-            Console.WriteLine($"{device.GetType().Name} has been handled.");
-        }
-
-        protected abstract Device GetDevice();
+    public abstract class BaseDeviceProducer {
+        public abstract Device GetDevice();
     }
 
-    public class MobileDeviceHandler : BaseDeviceHandler
+    public class MobileDevideProducer : BaseDeviceProducer
     {
-        protected override Device GetDevice() {
+        public override Device GetDevice() {
             return new Mobile();
         }
     }
 
-    public class LaptopDeviceHandler : BaseDeviceHandler
+    public class LaptopDeviceProducer : BaseDeviceProducer
     {
-        protected override Device GetDevice() {
+        public override Device GetDevice() {
             return new Laptop();
         }
     }
 
-    public abstract class Device
-    {
-        string Name { get; set; }
-    }
+    public abstract class Device { }
 
     public class Mobile : Device { }
 
