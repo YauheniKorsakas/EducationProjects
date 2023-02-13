@@ -8,6 +8,7 @@ using Education.Cases.SeniorPreparation;
 using Education.Cases.Patterns;
 using Education.Cases.Patterns.AbstractFactory;
 using Education.Cases.Patterns.Builder;
+using Education.Cases.Patterns.FactoryMethod;
 
 namespace Education
 {
@@ -15,7 +16,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<BuilderCase>();
+            await CaseRunner.RunCaseAsync<FactoryMethodCase>();
             
             Console.ReadKey();
         }
