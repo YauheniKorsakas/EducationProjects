@@ -41,11 +41,9 @@ namespace Education.Cases.Patterns.AbstractFactory
     public class ChiefDriver : Lead
     {
         public override void SendMessageToSubordinate(Subordinate subordinate) {
-            Console.WriteLine($"{GetType().Name} owns {subordinate.GetType().Name}");
+            Console.WriteLine($"{GetType().Name} owns {subordinate?.GetType()?.Name}");
         }
     }
 
     public class SubordinateDriver : Subordinate { }
-
-
 }
