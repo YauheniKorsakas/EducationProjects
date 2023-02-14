@@ -7,9 +7,9 @@ namespace Education.Core {
             try {
                 await Activator.CreateInstance<T>().RunAsync();
             } catch (Exception ex) {
-                Console.WriteLine($"Exception message: {ex.Message}");
+                Console.WriteLine($"\nException message: {ex.Message}");
             } finally {
-                Console.WriteLine("Runner invocation has been completed.");
+                Console.WriteLine("\nRunner invocation has been completed.");
             }
         }
     }

@@ -15,6 +15,7 @@ using Education.Cases.Patterns.Structural.Adapter;
 using Education.Cases.Patterns.Structural.Bridge;
 using Education.Cases.Patterns.Structural.Composite;
 using Education.Cases.Patterns.Structural.Decorator;
+using Education.Cases.Patterns.Structural.Facade;
 
 namespace Education
 {
@@ -22,7 +23,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<DecoratorCase>();
+            await CaseRunner.RunCaseAsync<FacadeCase>();
             
             Console.ReadKey();
         }
