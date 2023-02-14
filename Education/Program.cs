@@ -12,6 +12,7 @@ using Education.Cases.Patterns.Creational.FactoryMethod;
 using Education.Cases.Patterns.Creational.Prototype;
 using Education.Cases.Patterns.Creational.Singletone;
 using Education.Cases.Patterns.Structural.Adapter;
+using Education.Cases.Patterns.Structural.Bridge;
 
 namespace Education
 {
@@ -19,7 +20,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<AdapterCase>();
+            await CaseRunner.RunCaseAsync<BridgeCase>();
             
             Console.ReadKey();
         }

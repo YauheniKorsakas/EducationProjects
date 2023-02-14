@@ -7,7 +7,7 @@ namespace Education.Cases.Patterns.Creational.AbstractFactory
     public class AbstractFactoryCase : ICase
     {
         public async Task RunAsync() {
-            var driversGroup = new DriversGroup();
+            BaseEmployeeGroup driversGroup = new DriversGroup();
             var driverLead = driversGroup.GetLead();
             var driverSub = driversGroup.GetSubordinate();
             driverLead.SendMessageToSubordinate(driverSub);
