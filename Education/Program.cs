@@ -13,6 +13,7 @@ using Education.Cases.Patterns.Creational.Prototype;
 using Education.Cases.Patterns.Creational.Singletone;
 using Education.Cases.Patterns.Structural.Adapter;
 using Education.Cases.Patterns.Structural.Bridge;
+using Education.Cases.Patterns.Structural.Composite;
 
 namespace Education
 {
@@ -20,7 +21,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<BridgeCase>();
+            await CaseRunner.RunCaseAsync<CompositeCase>();
             
             Console.ReadKey();
         }
