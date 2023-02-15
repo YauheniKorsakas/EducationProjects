@@ -18,8 +18,9 @@ using Education.Cases.Patterns.Structural.Decorator;
 using Education.Cases.Patterns.Structural.Facade;
 using Education.Cases.Patterns.Structural.Flyweight;
 using Education.Cases.Patterns.Structural.Proxy;
-using Education.Cases.Patterns.Structural.ChainOfResponsibility;
+using Education.Cases.Patterns.Behavioral.ChainOfResponsibility;
 using Education.Cases.Patterns.Behavioral;
+using Education.Cases.Patterns.Behavioral.Interpreter;
 
 namespace Education
 {
@@ -27,7 +28,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<CommandCase>();
+            await CaseRunner.RunCaseAsync<InterpreterCase>();
             
             Console.ReadKey();
         }

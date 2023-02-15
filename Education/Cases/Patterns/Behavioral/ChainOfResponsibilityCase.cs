@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System;
 
-namespace Education.Cases.Patterns.Behavioral.ChainOfResponsibilityCase
+namespace Education.Cases.Patterns.Behavioral.ChainOfResponsibility
 {
     public class ChainOfResponsibilityCase : ICase
     {
