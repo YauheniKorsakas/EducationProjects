@@ -76,14 +76,16 @@ namespace Education.Cases.Patterns.Behavioral.Iterator
 
         public  interface AbstractCollection
         {
-            Iterator Iterator { get; set; }
+            Iterator CreateIterator();
         }
 
         public class ConcreteCollection : AbstractCollection
         {
             private readonly List<Employee> listEmployees = new List<Employee>();
 
-            public Iterator Iterator { get; set; } // have an ability to have iterator from outside to iterate over sequence
+            public Iterator CreateIterator() {
+                return new Iterator(this);
+            }
 
             public int Count => listEmployees.Count;
 
