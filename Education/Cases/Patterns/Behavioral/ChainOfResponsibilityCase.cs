@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 using System;
 
-namespace Education.Cases.Patterns.Structural.ChainOfResponsibility
+namespace Education.Cases.Patterns.Behavioral.ChainOfResponsibilityCase
 {
-    public class ChainOfResponsibilityCase : ICase {
+    public class ChainOfResponsibilityCase : ICase
+    {
         public async Task RunAsync() {
             var personLoan = new PersonLoanRequest(1, 150000);
             ILoanRequestValidator loanRequestValidator = new PersonIdLoanRequestValidator();
@@ -12,7 +13,8 @@ namespace Education.Cases.Patterns.Structural.ChainOfResponsibility
             loanRequestValidator.Validate(personLoan);
         }
 
-        public class PersonLoanRequest {
+        public class PersonLoanRequest
+        {
             public int PersonId { get; set; }
             public int MoneyToLoan { get; set; }
 
@@ -22,12 +24,14 @@ namespace Education.Cases.Patterns.Structural.ChainOfResponsibility
             }
         }
 
-        public interface ILoanRequestValidator {
+        public interface ILoanRequestValidator
+        {
             void Validate(PersonLoanRequest personLoan);
             void SetNextValidator(ILoanRequestValidator nextValidator);
         }
 
-        public abstract class BaseLoanRequestValidator : ILoanRequestValidator {
+        public abstract class BaseLoanRequestValidator : ILoanRequestValidator
+        {
             protected ILoanRequestValidator nextValidator;
 
             public abstract void Validate(PersonLoanRequest personLoan);
@@ -37,7 +41,8 @@ namespace Education.Cases.Patterns.Structural.ChainOfResponsibility
             }
         }
 
-        public class PersonIdLoanRequestValidator : BaseLoanRequestValidator, ILoanRequestValidator {
+        public class PersonIdLoanRequestValidator : BaseLoanRequestValidator, ILoanRequestValidator
+        {
             public override void Validate(PersonLoanRequest personLoanRequest) {
                 Console.WriteLine($"Checking person id ({personLoanRequest.PersonId}) for existance in system...");
                 Console.WriteLine($"Person id ({personLoanRequest.PersonId}) does exist.");

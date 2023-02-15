@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Education.Cases.Patterns.Structural.Command
+namespace Education.Cases.Patterns.Behavioral.Command
 {
     public class CommandCase : ICase
     {

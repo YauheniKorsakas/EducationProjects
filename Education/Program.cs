@@ -19,7 +19,7 @@ using Education.Cases.Patterns.Structural.Facade;
 using Education.Cases.Patterns.Structural.Flyweight;
 using Education.Cases.Patterns.Structural.Proxy;
 using Education.Cases.Patterns.Structural.ChainOfResponsibility;
-using Education.Cases.Patterns.Structural.Command;
+using Education.Cases.Patterns.Behavioral;
 
 namespace Education
 {
