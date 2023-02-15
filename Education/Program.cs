@@ -21,6 +21,7 @@ using Education.Cases.Patterns.Structural.Proxy;
 using Education.Cases.Patterns.Behavioral.ChainOfResponsibility;
 using Education.Cases.Patterns.Behavioral;
 using Education.Cases.Patterns.Behavioral.Interpreter;
+using Education.Cases.Patterns.Behavioral.Iterator;
 
 namespace Education
 {
@@ -28,7 +29,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<InterpreterCase>();
+            await CaseRunner.RunCaseAsync<IteratorCase>();
             
             Console.ReadKey();
         }
