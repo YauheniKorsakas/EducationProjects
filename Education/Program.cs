@@ -19,6 +19,7 @@ using Education.Cases.Patterns.Structural.Facade;
 using Education.Cases.Patterns.Structural.Flyweight;
 using Education.Cases.Patterns.Structural.Proxy;
 using Education.Cases.Patterns.Structural.ChainOfResponsibility;
+using Education.Cases.Patterns.Structural.Command;
 
 namespace Education
 {
@@ -26,7 +27,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<ChainOfResponsibilityCase>();
+            await CaseRunner.RunCaseAsync<CommandCase>();
             
             Console.ReadKey();
         }
