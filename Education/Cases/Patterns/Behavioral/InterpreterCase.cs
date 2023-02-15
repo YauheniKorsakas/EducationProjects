@@ -8,9 +8,9 @@ namespace Education.Cases.Patterns.Behavioral.Interpreter
     public class InterpreterCase : ICase
     {
         public async Task RunAsync() {
-            var evaluators = new List<IExamEvaluator<PersonExamsResults, PersonExamsInterpretation>>();
-            evaluators.Add(new MathExamEvaluator());
-            evaluators.Add(new EnglishExamEvaluator());
+            var evaluators = new List<IExamInterpretator<PersonExamsResults, PersonExamsInterpretation>>();
+            evaluators.Add(new MathExamInterpretator());
+            evaluators.Add(new EnglishExamInterpretator());
             var examResults = new PersonExamsResults {
                 PersonId = 1,
                 MathGrade = 6,
@@ -19,7 +19,7 @@ namespace Education.Cases.Patterns.Behavioral.Interpreter
             var examInterpretationInTermsOfDescriptions = new ExamInterpretationHost<PersonExamsResults, PersonExamsInterpretation>();
             examInterpretationInTermsOfDescriptions.ExamsResults = examResults;
 
-            evaluators.ForEach(item => item.Evaluate(examInterpretationInTermsOfDescriptions));
+            evaluators.ForEach(item => item.Interpretate(examInterpretationInTermsOfDescriptions));
             Console.WriteLine(examInterpretationInTermsOfDescriptions.ExamsInterpretation.EnglishRecall);
             Console.WriteLine(examInterpretationInTermsOfDescriptions.ExamsInterpretation.MathRecall);
         }
@@ -62,16 +62,16 @@ namespace Education.Cases.Patterns.Behavioral.Interpreter
         }
     }
 
-    public interface IExamEvaluator<T, U>
+    public interface IExamInterpretator<T, U>
             where T : PersonExamsResults
             where U : PersonExamsInterpretation, new()
     {
-        void Evaluate(ExamInterpretationHost<T, U> examInterpretationHost);
+        void Interpretate(ExamInterpretationHost<T, U> examInterpretationHost);
     }
 
-    public class MathExamEvaluator : IExamEvaluator<PersonExamsResults, PersonExamsInterpretation>
+    public class MathExamInterpretator : IExamInterpretator<PersonExamsResults, PersonExamsInterpretation>
     {
-        public void Evaluate(ExamInterpretationHost<PersonExamsResults, PersonExamsInterpretation> examInterpretationHost) {
+        public void Interpretate(ExamInterpretationHost<PersonExamsResults, PersonExamsInterpretation> examInterpretationHost) {
             examInterpretationHost.ExamsInterpretation.MathRecall = examInterpretationHost.ExamsResults?.MathGrade switch {
                 < 4 => "Did not succeed",
                 10 or 9 => "Very nice",
@@ -81,9 +81,9 @@ namespace Education.Cases.Patterns.Behavioral.Interpreter
         }
     }
 
-    public class EnglishExamEvaluator : IExamEvaluator<PersonExamsResults, PersonExamsInterpretation>
+    public class EnglishExamInterpretator : IExamInterpretator<PersonExamsResults, PersonExamsInterpretation>
     {
-        public void Evaluate(ExamInterpretationHost<PersonExamsResults, PersonExamsInterpretation> examInterpretationHost) {
+        public void Interpretate(ExamInterpretationHost<PersonExamsResults, PersonExamsInterpretation> examInterpretationHost) {
             examInterpretationHost.ExamsInterpretation.EnglishRecall = examInterpretationHost.ExamsResults?.EnglishGrade switch {
                 < 6 => "Did not succeed",
                 10 or 9 => "Very nice",
