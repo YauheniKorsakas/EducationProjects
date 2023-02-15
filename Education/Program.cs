@@ -17,6 +17,7 @@ using Education.Cases.Patterns.Structural.Composite;
 using Education.Cases.Patterns.Structural.Decorator;
 using Education.Cases.Patterns.Structural.Facade;
 using Education.Cases.Patterns.Structural.Flyweight;
+using Education.Cases.Patterns.Structural.Proxy;
 
 namespace Education
 {
@@ -24,7 +25,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<FlyweightCase>();
+            await CaseRunner.RunCaseAsync<ProxyCase>();
             
             Console.ReadKey();
         }
