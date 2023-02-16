@@ -22,6 +22,7 @@ using Education.Cases.Patterns.Behavioral.ChainOfResponsibility;
 using Education.Cases.Patterns.Behavioral;
 using Education.Cases.Patterns.Behavioral.Interpreter;
 using Education.Cases.Patterns.Behavioral.Iterator;
+using Education.Cases.Patterns.Behavioral.Mediator;
 
 namespace Education
 {
@@ -29,7 +30,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<IteratorCase>();
+            await CaseRunner.RunCaseAsync<MediatorCase>();
             
             Console.ReadKey();
         }
