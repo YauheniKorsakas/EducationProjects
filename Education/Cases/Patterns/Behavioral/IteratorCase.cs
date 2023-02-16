@@ -51,7 +51,6 @@ namespace Education.Cases.Patterns.Behavioral.Iterator
 
             public Iterator(ConcreteCollection collection) {
                 this.collection = collection;
-                this.collection.Iterator = this;
             }
 
             public Employee First() {
