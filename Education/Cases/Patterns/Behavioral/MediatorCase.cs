@@ -7,6 +7,7 @@ namespace Education.Cases.Patterns.Behavioral.Mediator
 {
     // like observer, but mediator decides how what and who will receive a message
     // whereas obserable itself contains a logic to provide state update
+    // the more objects to interract the harder it is to handle relationships between them properly
     public class MediatorCase : ICase
     {
         public async Task RunAsync() {
