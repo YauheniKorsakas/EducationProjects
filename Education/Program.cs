@@ -25,6 +25,7 @@ using Education.Cases.Patterns.Behavioral.Iterator;
 using Education.Cases.Patterns.Behavioral.Mediator;
 using Education.Cases.Patterns.Behavioral.Memento;
 using Education.Cases.Patterns.Behavioral.Observer;
+using Education.Cases.Patterns.Behavioral.State;
 
 namespace Education
 {
@@ -32,7 +33,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<ObserverCase>();
+            await CaseRunner.RunCaseAsync<StateCase>();
             
             Console.ReadKey();
         }
