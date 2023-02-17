@@ -30,7 +30,7 @@ namespace Education.Cases.Patterns.Behavioral.TemplateMethod
                 Weight = 1001
             };
 
-            //personStorage.SaveData(notOkPerson);
+            // personStorage.SaveData(notOkPerson);
             personStorage.SaveData(okPerson);
             Console.WriteLine("\n");
             carStorage.SaveData(okCar);
