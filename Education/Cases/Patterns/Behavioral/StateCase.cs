@@ -27,7 +27,12 @@ namespace Education.Cases.Patterns.Behavioral.State
 
         public class ATM : IAtm
         {
-            public IAtmState CurrentState { get; set; }
+            private IAtmState currentState;
+
+            public IAtmState CurrentState {
+                get => currentState;
+                set => currentState = value ?? throw new ArgumentException("Invalid state");
+            }
 
             public ATM() {
                 CurrentState = new CardNotInsertedAtmState(this);
