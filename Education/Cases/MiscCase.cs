@@ -13,94 +13,30 @@ namespace Education.Cases
     public class MiscCase : ICase
     {
         public async Task RunAsync() {
-            // 500 500 1000
-            var result = GetResult();
-            //var (firstNode, secondNode) = GetNodes();
-            //Console.WriteLine(GetStringNumberFromNode(firstNode));
+            var numbs = new int[] { 123, 33, 25};
 
-            // var res = GetNodeFromString("500");
-        }
+            var currentMaxValue = 0;
+            var left = 0;
+            var right = numbs.Length - 1;
 
-        private ListNode GetResult() {
-            // 500 500 1000
-            var (firstNode, secondNode) = GetNodes();
-            var firstNumber = nuint.Parse(GetStringNumberFromNode(firstNode)); // заменить на лист
-            var secondNumber = nuint.Parse(GetStringNumberFromNode(secondNode)); // заменить на лист
-            var sum = firstNumber + secondNumber; // алгоритм сложения с конца поэлементно; получаем новый лист элементов
-            var reversedNumAsString = string.Join("", sum.ToString().Reverse()); // парсим полученный лист в строку
-            var result = GetNodeFromString(reversedNumAsString); // получаем ноду из полученной строки
+            while (left < right) {
+                int width = right - left;
+                currentMaxValue = Math.Max(currentMaxValue, width * Math.Min(numbs[left], numbs[right]));
 
-            return result;
-        }
-
-        private ListNode GetNodeFromString(string source, int currentIndex = -1) {
-            currentIndex++;
-            var result = new ListNode {
-                val = int.Parse(source.ElementAt(currentIndex).ToString()),
-                next = currentIndex == source.Length -1 ? null : GetNodeFromString(source, currentIndex)
-            };
-
-            return result;
-        }
-
-        private string GetStringNumberFromNode(ListNode node, string currentString = "") {
-            if (node.next is not null) {
-                currentString += GetStringNumberFromNode(node.next, currentString);
-            }
-            currentString += node.val.ToString();
-
-            return currentString;
-        }
-
-        private (ListNode, ListNode) GetNodes() {
-            var firstNumbersNode = new ListNode {
-                val = 9,
-                next = null
-            };
-
-            var secondNumbersNode = new ListNode {
-                val = 1,
-                next = new ListNode {
-                    val = 9,
-                    next = new ListNode {
-                        val = 9,
-                        next = new ListNode {
-                            val = 9,
-                            next = new ListNode {
-                                val = 9,
-                                next = new ListNode {
-                                    val = 9,
-                                    next = new ListNode {
-                                        val = 9,
-                                        next = new ListNode {
-                                            val = 9,
-                                            next = new ListNode {
-                                                val = 9,
-                                                next = new ListNode {
-                                                    val = 9,
-                                                    next = null
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                if (numbs[left] <= numbs[right]) {
+                    left++;
+                } else {
+                    right--;
                 }
-            };
-
-            return (firstNumbersNode, secondNumbersNode);
-        }
-    }
-
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
-        public ListNode(int val = 0, ListNode next = null) {
-            this.val = val;
-            this.next = next;
+            }
         }
     }
 }
+
+// sort by value
+// 
+
+// x = i last - i first
+// y = min(pair[first], pair[last])
+// x * y
+// int maxAmount = x * y;
