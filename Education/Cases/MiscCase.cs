@@ -8,35 +8,26 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Education.Cases
+namespace Education.Cases.Misc
 {
     public class MiscCase : ICase
     {
         public async Task RunAsync() {
-            var numbs = new int[] { 123, 33, 25};
+            var lazy = new Lazy<Person>(() => new Person(() => Console.WriteLine($"person created")) { Id = 1 });
+            Console.WriteLine("Lazy var was created");
+            Console.WriteLine(lazy.IsValueCreated);
+            Console.WriteLine(lazy.Value.Id);
+            Console.WriteLine("After lazy");
+            Console.WriteLine();
+        }
+    }
 
-            var currentMaxValue = 0;
-            var left = 0;
-            var right = numbs.Length - 1;
+    public class Person
+    {
+        public int Id { get; set; }
 
-            while (left < right) {
-                int width = right - left;
-                currentMaxValue = Math.Max(currentMaxValue, width * Math.Min(numbs[left], numbs[right]));
-
-                if (numbs[left] <= numbs[right]) {
-                    left++;
-                } else {
-                    right--;
-                }
-            }
+        public Person(Action creationCallback) {
+            creationCallback?.Invoke();
         }
     }
 }
-
-// sort by value
-// 
-
-// x = i last - i first
-// y = min(pair[first], pair[last])
-// x * y
-// int maxAmount = x * y;

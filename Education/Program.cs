@@ -29,6 +29,7 @@ using Education.Cases.Patterns.Behavioral.State;
 using Education.Cases.Patterns.Behavioral.Strategy;
 using Education.Cases.Patterns.Behavioral.TemplateMethod;
 using Education.Cases.Patterns.Behavioral.Visitor;
+using Education.Cases.Misc;
 
 namespace Education
 {
@@ -36,7 +37,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<VisitorCase>();
+            await CaseRunner.RunCaseAsync<ObserverCase>();
             
             Console.ReadKey();
         }

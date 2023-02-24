@@ -37,7 +37,7 @@ namespace Education.Cases.Patterns.Behavioral.Strategy
 
         public interface IPersonStatisticStorage
         {
-            void ShowTextRepresentation(int personId, IPersonStatisticRepresentator representation);
+            void ShowTextRepresentation(int personId, IPersonStatisticRepresentator representator);
         }
 
         public class PersonStatisticRepresentationForAccountant : IPersonStatisticRepresentator
