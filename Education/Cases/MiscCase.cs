@@ -13,21 +13,8 @@ namespace Education.Cases.Misc
     public class MiscCase : ICase
     {
         public async Task RunAsync() {
-            var lazy = new Lazy<Person>(() => new Person(() => Console.WriteLine($"person created")) { Id = 1 });
-            Console.WriteLine("Lazy var was created");
-            Console.WriteLine(lazy.IsValueCreated);
-            Console.WriteLine(lazy.Value.Id);
-            Console.WriteLine("After lazy");
-            Console.WriteLine();
-        }
-    }
-
-    public class Person
-    {
-        public int Id { get; set; }
-
-        public Person(Action creationCallback) {
-            creationCallback?.Invoke();
+            var list = new List<int> { 1, 2, 3 }.ToArray();
+            var copy = list[..];
         }
     }
 }
