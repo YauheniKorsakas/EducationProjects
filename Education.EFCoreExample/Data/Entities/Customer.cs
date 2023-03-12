@@ -1,9 +1,8 @@
-﻿using NLayer.Domain.Base;
-
-namespace NLayer.Domain.Entities
+﻿namespace Education.EFCoreExample.Data.Entities
 {
-    public class Customer : BaseEntity<int>
+    public class Customer
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
 

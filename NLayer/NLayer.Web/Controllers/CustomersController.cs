@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using NLayer.Business.Queries;
+using NLayer.Core.Models;
+using NLayer.Domain.Base;
+using NLayer.Domain.Entities;
 using NLayer.Web.Models.Command.Customer;
 using NLayer.Web.Models.Query.Customer;
 

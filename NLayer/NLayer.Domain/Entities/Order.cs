@@ -1,10 +1,10 @@
-﻿namespace NLayer.Domain.Entities
+﻿using NLayer.Domain.Base;
+
+namespace NLayer.Domain.Entities
 {
-    public class Order
+    public class Order : BaseEntity<int>
     {
-        public int Id { get; set; }
         public int CustomerId { get; set; }
-        public int ItemId { get; set; }
-        public int ItemCount { get; set; }
-    }
+
+        public Customer Customer { get; set; }        public ICollection<ItemOrder> ItemOrders { get; set; }    }
 }

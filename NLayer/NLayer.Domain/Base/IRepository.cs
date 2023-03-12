@@ -2,14 +2,18 @@
 
 namespace NLayer.Domain.Base
 {
-    public interface IRepository<T, U> where T : BaseEntity<U>
-                                       where U : struct
+    public interface IRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
+                                                where TKey : struct
     {
-        T Get(U id);
-        IEnumerable<T> Get();
-        IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
-        void Add(T entity);
-        void Delete(T entity);
-        void Update(T entity);
+        TEntity Get(TKey id);
+        IEnumerable<TEntity> Get();
+        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
+        void Add(TEntity entity);
+        void Delete(TEntity entity);
+        void Delete(TKey key);
+        void Update(TEntity entity);
+        Task SaveAsync();
     }
+
+    public interface IRepository<TEntity> : IRepository<TEntity, int> where TEntity: BaseEntity<int> { }
 }

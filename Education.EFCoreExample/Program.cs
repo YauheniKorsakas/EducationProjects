@@ -1,17 +1,8 @@
-﻿//using Education.EFCoreExample.Data;
-//using Education.EFCoreExample.Data.Entities;
-//using Microsoft.EntityFrameworkCore;
+﻿using Education.EFCoreExample.Data;
+using Education.EFCoreExample.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
-//using var context = new BloggingContext("Server=LINKPC;Database=Blogging;TrustServerCertificate=True;");
-//await context.Database.EnsureCreatedAsync();
-//var blog = new Blog
-//{
-//    Name = "First top blog"
-//};
-//var paramName = "Fourth";
-//var res = context.Blogs.ToList();
+using var context = new BloggingContext("Server=LINKPC;Database=Blogging;Trusted_Connection=true;TrustServerCertificate=True;");
+await context.Database.EnsureCreatedAsync(); 
 
-//foreach (var item in res)
-//{
-//    Console.WriteLine(item.Id + " " + item.Name);
-//}
+
