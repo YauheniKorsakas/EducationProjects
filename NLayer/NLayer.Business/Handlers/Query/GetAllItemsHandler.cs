@@ -18,7 +18,7 @@ namespace NLayer.Business.Handlers.Query
         }
 
         public Task<IReadOnlyCollection<ItemDto>> Handle(GetAllItemsQuery request, CancellationToken cancellationToken) {
-            var result = itemRepository.Get(s => true);
+            var result = itemRepository.Get();
             var mappedResult = mapper.Map<IReadOnlyCollection<ItemDto>>(result);
 
             return Task.FromResult(mappedResult);

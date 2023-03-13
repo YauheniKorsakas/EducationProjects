@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NLayer.Business.Queries;
 using NLayer.Web.Models.Order;
 
 namespace NLayer.Web.Controllers
@@ -13,8 +14,11 @@ namespace NLayer.Web.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<OrderViewModel>> Get() {
-            throw new NotImplementedException();
+        public async Task<ActionResult<IEnumerable<OrderViewModel>>> Get() {
+            var source = await sender.Send(new GetAllOrdersQuery());
+            var result = mapper.Map<IReadOnlyCollection<OrderViewModel>>(source);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

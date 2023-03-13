@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NLayer.Domain.Entities;
-using System.Reflection;
 
 namespace NLayer.Infrastructure
 {
     public class ShopContext : DbContext
     {
-        public ShopContext(DbContextOptions<ShopContext> options) : base(options) { }
+        public ShopContext(DbContextOptions<ShopContext> options) : base(options) {
+            ChangeTracker.LazyLoadingEnabled = false;
+        }
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Item> Items { get; set; }

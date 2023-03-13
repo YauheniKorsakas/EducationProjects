@@ -7,6 +7,7 @@ namespace NLayer.Web.Models.Order
         public int Id { get; set; }
         public int CustomerId { get; set; }
         public string CustomerFullName { get; set; }
-        public List<ItemViewModel> Items { get; set; }
+        public int TotalPrice { get; set; }
+        public List<ItemListViewModel> Items { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NLayer.Domain.Entities;
-using System.Reflection.Emit;
+﻿using NLayer.Domain.Entities;
 
 namespace NLayer.Infrastructure
 {
@@ -47,6 +45,16 @@ namespace NLayer.Infrastructure
                     Price = 200,
                     TotalCount = 12323
                 },
+            });
+            context.Orders.Add(new Order {
+                CustomerId = 1,
+                ItemOrders = new List<ItemOrder> {
+                    new ItemOrder {
+                        ItemId = 1,
+                        OrderId = 1,
+                        ItemCount = 1
+                    }
+                }
             });
             await context.SaveChangesAsync();
         }

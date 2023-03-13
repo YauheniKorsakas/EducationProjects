@@ -7,7 +7,7 @@ namespace NLayer.Domain.Base
     {
         TEntity Get(TKey id);
         IEnumerable<TEntity> Get();
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null);
         void Add(TEntity entity);
         void Delete(TEntity entity);
         void Delete(TKey key);

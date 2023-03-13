@@ -1,8 +1,7 @@
-﻿using Azure.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using NLayer.Domain.Base;
 using System.Linq.Expressions;
-using System.Xml;
 
 namespace NLayer.Infrastructure.Repositories
 {
@@ -12,8 +11,7 @@ namespace NLayer.Infrastructure.Repositories
         protected readonly ShopContext context;
         protected readonly DbSet<TEntity> entities;
 
-        public Repository(ShopContext context)
-        {
+        public Repository(ShopContext context) {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             entities = this.context.Set<TEntity>();
         }
@@ -40,12 +38,20 @@ namespace NLayer.Infrastructure.Repositories
         }
 
         public IEnumerable<TEntity> Get() {
-            return entities.ToList();
+            return entities.AsEnumerable();
         }
 
-        public IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> predicate) {
+        public IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> predicate,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null) {
             if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-            return entities.Where(predicate).AsEnumerable();
+            var query = entities.Where(predicate);
+            
+            if (include is not null) {
+                query = include(query);
+            }
+
+            return query.AsEnumerable();
         }
 
         public void Update(TEntity entity) {
@@ -67,7 +73,8 @@ namespace NLayer.Infrastructure.Repositories
         public Task SaveAsync() => context.SaveChangesAsync();
     }
 
-    public class Repository<TEntity> : Repository<TEntity, int>, IRepository<TEntity> where TEntity : BaseEntity<int> {
+    public class Repository<TEntity> : Repository<TEntity, int>, IRepository<TEntity> where TEntity : BaseEntity<int>
+    {
         public Repository(ShopContext context) : base(context) { }
     }
 }
