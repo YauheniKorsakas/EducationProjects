@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayer.Business.Models
+namespace NLayer.Business.Models.Customer
 {
     public class CustomerDto
     {

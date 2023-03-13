@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using NLayer.Business.Models;
-using NLayer.Web.Models.Query.Customer;
+using NLayer.Business.Models.Customer;
+using NLayer.Web.Models.Customer;
 
 namespace NLayer.Web.Automapper
 {
@@ -9,6 +9,7 @@ namespace NLayer.Web.Automapper
         public CustomerProfile()
         {
             CreateMap<CustomerDto, CustomerViewModel>();
+            CreateMap<CustomerCreateViewModel, CustomerCreateDto>();
         }
     }
 }

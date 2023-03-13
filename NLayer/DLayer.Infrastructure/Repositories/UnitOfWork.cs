@@ -10,7 +10,7 @@ namespace NLayer.Infrastructure.Repositories
         public IRepository<Customer> CustomerRepository { get; }
         public IRepository<Item> ItemRepository { get; }
 
-        public UnitOfWork(
+        public UnitOfWork( // have repos as injection?
             ShopContext context,
             IRepository<Order> orderRepository,
             IRepository<Customer> customerRepository,

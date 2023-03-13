@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NLayer.Web.Models.Command.Order
+namespace NLayer.Web.Models.Order
 {
     public class OrderCreateViewModel
     {

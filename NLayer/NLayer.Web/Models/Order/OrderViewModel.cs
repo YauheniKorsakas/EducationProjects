@@ -1,6 +1,6 @@
-﻿using NLayer.Web.Models.Query.Item;
+﻿using NLayer.Web.Models.Item;
 
-namespace NLayer.Web.Models.Query.Order
+namespace NLayer.Web.Models.Order
 {
     public class OrderViewModel
     {

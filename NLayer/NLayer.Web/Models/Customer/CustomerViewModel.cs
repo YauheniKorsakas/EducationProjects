@@ -1,4 +1,4 @@
-﻿namespace NLayer.Web.Models.Query.Customer
+﻿namespace NLayer.Web.Models.Customer
 {
     public class CustomerViewModel
     {

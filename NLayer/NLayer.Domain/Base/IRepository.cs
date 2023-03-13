@@ -12,6 +12,7 @@ namespace NLayer.Domain.Base
         void Delete(TEntity entity);
         void Delete(TKey key);
         void Update(TEntity entity);
+        void Update(TEntity entity, Expression<Func<TEntity, object>>[] updatableProperties);
         Task SaveAsync();
     }
 

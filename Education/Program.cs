@@ -38,7 +38,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<TasksCase>();
+            await CaseRunner.RunCaseAsync<MiscCase>();
             
             Console.ReadKey();
         }

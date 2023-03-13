@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NLayer.Web.Models.Command.Order;
-using NLayer.Web.Models.Query.Order;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using NLayer.Web.Models.Order;
 
 namespace NLayer.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController : BaseController
     {
+        public OrdersController(ISender sender, IMapper mapper) : base(sender, mapper) { }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<OrderViewModel>> Get() {

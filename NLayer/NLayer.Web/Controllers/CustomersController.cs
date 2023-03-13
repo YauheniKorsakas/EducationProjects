@@ -1,27 +1,18 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using NLayer.Business.Commands;
+using NLayer.Business.Models.Customer;
 using NLayer.Business.Queries;
-using NLayer.Core.Models;
-using NLayer.Domain.Base;
-using NLayer.Domain.Entities;
-using NLayer.Web.Models.Command.Customer;
-using NLayer.Web.Models.Query.Customer;
+using NLayer.Web.Models.Customer;
 
 namespace NLayer.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BaseController
     {
-        private readonly ISender sender;
-        private readonly IMapper mapper;
-
-        public CustomersController(ISender sender, IMapper mapper) {
-            this.sender = sender ?? throw new ArgumentNullException(nameof(sender));
-            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        }
+        public CustomersController(ISender sender, IMapper mapper) : base(sender, mapper) { }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -35,14 +26,20 @@ namespace NLayer.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CustomerViewModel> Get(int id) {
-            throw new NotImplementedException();
+        public async Task<ActionResult<CustomerViewModel>> Get(int id) {
+            var source = await sender.Send(new GetCustomerQuery() { Id = id });
+            var result = mapper.Map<CustomerViewModel>(source);
+
+            return Ok(result);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Post([FromBody] CustomerCreateViewModel model) {
+        public async Task<ActionResult> Post([FromBody] CustomerCreateViewModel model) {
+            var mappedModel = mapper.Map<CustomerCreateDto>(model);
+            await sender.Send(new CreateCustomerCommand { Customer = mappedModel });
+
             return StatusCode(StatusCodes.Status201Created);
         }
     }

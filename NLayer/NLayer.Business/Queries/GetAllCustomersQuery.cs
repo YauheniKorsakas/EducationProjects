@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using NLayer.Business.Models;
+using NLayer.Business.Models.Customer;
 
 namespace NLayer.Business.Queries
 {

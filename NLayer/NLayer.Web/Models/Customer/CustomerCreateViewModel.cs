@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NLayer.Web.Models.Command.Item
+namespace NLayer.Web.Models.Customer
 {
-    public class ItemCreateViewModel
+    public class CustomerCreateViewModel
     {
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public int Count { get; set; }
+        public string Surname { get; set; }
     }
 }
