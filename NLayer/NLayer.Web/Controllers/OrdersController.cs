@@ -8,8 +8,6 @@ using NLayer.Web.Models.Order;
 
 namespace NLayer.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class OrdersController : BaseController
     {
         public OrdersController(ISender sender, IMapper mapper) : base(sender, mapper) { }

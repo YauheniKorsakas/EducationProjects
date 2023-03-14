@@ -8,8 +8,6 @@ using NLayer.Web.Models.Item;
 
 namespace NLayer.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ItemsController : BaseController
     {
         public ItemsController(ISender sender, IMapper mapper) : base(sender, mapper) { }

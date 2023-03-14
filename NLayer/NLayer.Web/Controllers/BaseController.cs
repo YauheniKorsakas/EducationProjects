@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NLayer.Web.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public abstract class BaseController : ControllerBase
     {
         protected readonly ISender sender;
