@@ -19,7 +19,7 @@ namespace NLayer.Business.Handlers.Query
 
         // Do we need to check request nullability here?
         public Task<CustomerDto> Handle(GetCustomerQuery request, CancellationToken cancellationToken) {
-            var result = customerRepository.Get(request.Id);
+            var result = customerRepository.Query.FirstOrDefault(item => item.Id == request.Id);
             var mappedResult = mapper.Map<CustomerDto>(result);
 
             return Task.FromResult(mappedResult);

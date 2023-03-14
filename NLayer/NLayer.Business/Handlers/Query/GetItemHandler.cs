@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using NLayer.Business.Models.Item;
 using NLayer.Business.Queries;
@@ -18,10 +19,13 @@ namespace NLayer.Business.Handlers.Query
         }
 
         public Task<ItemDto> Handle(GetItemQuery request, CancellationToken cancellationToken) {
-            var result = itemRepository.Get(request.Id);
-            var mappedResult = mapper.Map<ItemDto>(result);
+            var result = itemRepository
+                .Query
+                .Where(item => item.Id == request.Id)
+                .ProjectTo<ItemDto>(mapper.ConfigurationProvider)
+                .FirstOrDefault();
 
-            return Task.FromResult(mappedResult);
+            return Task.FromResult(result);
         }
     }
 }

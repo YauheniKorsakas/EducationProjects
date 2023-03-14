@@ -1,9 +1,10 @@
-﻿namespace NLayer.Web.Models.Item
+﻿namespace NLayer.Business.Models.Item
 {
-    public class ItemListViewModel
+    public class ItemOrderListDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+        public int ItemCount { get; set; }
     }
 }

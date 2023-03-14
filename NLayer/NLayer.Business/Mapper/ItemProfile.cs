@@ -11,6 +11,7 @@ namespace NLayer.Business.Mapper
             CreateMap<Item, ItemDto>();
             CreateMap<ItemCreateDto, Item>();
             CreateMap<ItemUpdateDto, Item>();
+            CreateMap<Item, ItemOrderListDto>();
         }
     }
 }

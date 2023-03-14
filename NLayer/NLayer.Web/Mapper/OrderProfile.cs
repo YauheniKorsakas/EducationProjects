@@ -9,7 +9,8 @@ namespace NLayer.Web.Mapper
         public OrderProfile()
         {
             CreateMap<OrderDto, OrderViewModel>()
-                .ForMember(s => s.TotalPrice, o => o.MapFrom(item => item.Items.Sum(s => s.Price)));
+                .ForMember(s => s.TotalPrice, o => o.MapFrom(item => item.Items.Sum(s => s.Price * s.ItemCount)));
+            CreateMap<OrderCreateViewModel, OrderCreateDto>();
         }
     }
 }

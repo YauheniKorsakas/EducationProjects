@@ -7,6 +7,7 @@ namespace NLayer.Domain.Base
         IRepository<Order> OrderRepository { get; }
         IRepository<Customer> CustomerRepository { get; }
         IRepository<Item> ItemRepository { get; }
+        Task ExecuteInTransactionAsync(Func<Task> action);
         Task SaveAsync();
     }
 }

@@ -11,6 +11,9 @@ namespace NLayer.Web.Mapper
             CreateMap<ItemDto, ItemViewModel>();
             CreateMap<ItemCreateViewModel, ItemCreateDto>();
             CreateMap<ItemUpdateViewModel, ItemUpdateDto>();
+            CreateMap<ItemListDto, ItemListViewModel>();
+            CreateMap<ItemOrderListDto, ItemOrderListViewModel>();
+            CreateMap<ItemCreateOrderViewModel, ItemCreateOrderDto>();
         }
     }
 }

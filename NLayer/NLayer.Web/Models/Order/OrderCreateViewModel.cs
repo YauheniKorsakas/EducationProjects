@@ -1,14 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DataAnnotationsExtensions;
+using NLayer.Web.Models.Item;
+using System.ComponentModel.DataAnnotations;
 
 namespace NLayer.Web.Models.Order
 {
     public class OrderCreateViewModel
     {
-        [Required]
+        [Min(1)]
         public int CustomerId { get; set; }
 
         [MinLength(1)]
         [Required]
-        public Dictionary<int, int> ItemsAndCounts { get; set; }
+        public List<ItemCreateOrderViewModel> Items { get; set; }
     }
 }

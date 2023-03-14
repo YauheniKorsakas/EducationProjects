@@ -52,6 +52,11 @@ namespace NLayer.Infrastructure
                     new ItemOrder {
                         ItemId = 1,
                         OrderId = 1,
+                        ItemCount = 2
+                    },
+                    new ItemOrder {
+                        ItemId = 2,
+                        OrderId = 1,
                         ItemCount = 1
                     }
                 }

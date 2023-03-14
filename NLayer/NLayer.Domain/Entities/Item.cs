@@ -7,7 +7,5 @@ namespace NLayer.Domain.Entities
         public string Name { get; set; }
         public int TotalCount { get; set; }
         public double Price { get; set; }
-
-        public ICollection<ItemOrder> ItemOrders { get; set; }
     }
 }

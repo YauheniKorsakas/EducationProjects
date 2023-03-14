@@ -8,21 +8,24 @@ using NLayer.Domain.Entities;
 
 namespace NLayer.Business.Handlers.Query
 {
-    public class GetAllOrdersHandler : IRequestHandler<GetAllOrdersQuery, IReadOnlyCollection<OrderDto>>
+    public class GetOrderHandler : IRequestHandler<GetOrderQuery, OrderDto>
     {
         private readonly IRepository<Order> orderRepository;
         private readonly IMapper mapper;
 
-        public GetAllOrdersHandler(IRepository<Order> orderRepository, IMapper mapper) {
+        public GetOrderHandler(IRepository<Order> orderRepository, IMapper mapper) {
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             this.orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         }
 
-        public Task<IReadOnlyCollection<OrderDto>> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken) {
-            var result = orderRepository.Query.ProjectTo<OrderDto>(mapper.ConfigurationProvider);
-            var mappedResult = mapper.Map<IReadOnlyCollection<OrderDto>>(result);
+        public Task<OrderDto> Handle(GetOrderQuery request, CancellationToken cancellationToken) {
+            var result = orderRepository
+                .Query
+                .Where(s => s.Id == request.Id)
+                .ProjectTo<OrderDto>(mapper.ConfigurationProvider)
+                .FirstOrDefault();
 
-            return Task.FromResult(mappedResult);
+            return Task.FromResult(result);
         }
     }
 }

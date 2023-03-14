@@ -1,5 +1,8 @@
-﻿using NLayer.Domain.Base;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using NLayer.Domain.Base;
 using NLayer.Domain.Entities;
+using System.Transactions;
 
 namespace NLayer.Infrastructure.Repositories
 {
@@ -28,6 +31,18 @@ namespace NLayer.Infrastructure.Repositories
 
         public Task SaveAsync() {
             return context.SaveChangesAsync();
+        }
+
+        public async Task ExecuteInTransactionAsync(Func<Task> action) {
+            if (action is null) {
+                throw new ArgumentNullException(nameof(action));
+            }
+            var strategy = context.Database.CreateExecutionStrategy();
+            await strategy.ExecuteAsync(async () => {
+                using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+                await action();
+                transaction.Complete();
+            });
         }
     }
 }

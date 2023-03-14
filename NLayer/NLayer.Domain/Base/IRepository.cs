@@ -5,14 +5,12 @@ namespace NLayer.Domain.Base
     public interface IRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
                                                 where TKey : struct
     {
-        TEntity Get(TKey id);
-        IEnumerable<TEntity> Get();
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null);
+        IQueryable<TEntity> Query { get; }
         void Add(TEntity entity);
         void Delete(TEntity entity);
         void Delete(TKey key);
         void Update(TEntity entity);
-        void Update(TEntity entity, Expression<Func<TEntity, object>>[] updatableProperties);
+        void Update(TEntity entity, params Expression<Func<TEntity, object>>[] updatableProperties);
         Task SaveAsync();
     }
 

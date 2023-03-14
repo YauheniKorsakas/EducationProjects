@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using NLayer.Domain.Base;
 using System.Linq.Expressions;
 
@@ -8,12 +7,15 @@ namespace NLayer.Infrastructure.Repositories
     public class Repository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
                                                                         where TKey : struct
     {
+        public IQueryable<TEntity> Query { get; }
+
         protected readonly ShopContext context;
         protected readonly DbSet<TEntity> entities;
 
         public Repository(ShopContext context) {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
             entities = this.context.Set<TEntity>();
+            Query = entities.AsQueryable();
         }
 
         public void Add(TEntity entity) {
@@ -29,29 +31,8 @@ namespace NLayer.Infrastructure.Repositories
         }
 
         public void Delete(TKey key) {
-            var existing = Get(key); // shit - would be better without retreiving.
+            var existing = context.Find<TEntity>(key);
             Delete(existing);
-        }
-
-        public TEntity Get(TKey id) {
-            return entities.Find(id);
-        }
-
-        public IEnumerable<TEntity> Get() {
-            return entities.AsEnumerable();
-        }
-
-        public IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> predicate,
-            Func<IQueryable<TEntity>, IQueryable<TEntity>> include = null) {
-            if (predicate is null) throw new ArgumentNullException(nameof(predicate));
-            var query = entities.Where(predicate);
-            
-            if (include is not null) {
-                query = include(query);
-            }
-
-            return query.AsEnumerable();
         }
 
         public void Update(TEntity entity) {

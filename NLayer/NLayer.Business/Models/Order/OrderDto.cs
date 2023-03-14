@@ -7,6 +7,6 @@ namespace NLayer.Business.Models.Order
         public int Id { get; set; }
         public int CustomerId { get; set; }
         public string CustomerFullName { get; set; }
-        public List<ItemListDto> Items { get; set; }
+        public List<ItemOrderListDto> Items { get; set; }
     }
 }
