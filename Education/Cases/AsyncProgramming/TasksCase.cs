@@ -6,26 +6,205 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
+using System.Net;
 
-namespace Education.Cases.AsyncProgramming
+namespace Education.Cases.AsyncProgramming.TasksCase
 {
     public class TasksCase : ICase
     {
         public async Task RunAsync() {
-            var cts = new CancellationTokenSource();
-            Task.Run(async () => {
-                await Task.Delay(2000);
-                cts.Cancel();
-            });
-            var task = PerformOperationsAsync(cts.Token);
+            var task = ThrowIfRequestedInTaskAsync();
+            await task;
+        }
+
+        private async Task ThrowIfRequestedInTaskAsync() {
+            using var cts = new CancellationTokenSource();
+            cts.CancelAfter(1000);
+            Task task;
+            Task task1;
             try {
-                await task;
+                task = Task.Run(async () => {
+                    await Task.Delay(1000);
+                    cts.Token.ThrowIfCancellationRequested();
+                }, cts.Token);
+                task1 = Task.Run(async () => {
+                    await Task.Delay(5000, cts.Token);
+                    cts.Token.ThrowIfCancellationRequested();
+                });
+                await Task.WhenAll(task, task1);
+            } catch (Exception ex) { }
+        }
+
+        private async Task InvokeTaskContinuationOptionsAsync() {
+            var task = Task.Run(() => {
+                throw new Exception();
+            }).ContinueWith(t => {
+                Console.WriteLine("Faulted 123");
+            }, TaskContinuationOptions.OnlyOnFaulted);
+            // TaskContinuationOptions.OnlyOnCanceled
+            await task;
+        }
+
+        private async Task RemoveTaskAsItCompletesAsync() { // handle date asap
+            var tasks = new List<Task<int>> {
+                Task.Run(async () => {
+                    await Task.Delay(1000);
+                    Console.WriteLine("First");
+                    return 1;
+                }),
+                Task.Run(async () => {
+                    await Task.Delay(1500);
+                    Console.WriteLine("Second");
+                    return 2;
+                })
+            };
+
+            while (tasks.Count > 0) {
+                var task = await Task.WhenAny(tasks);
+                var result = await task;
+                await Console.Out.WriteLineAsync(result.ToString());
+                tasks.Remove(task);
+            }
+        }
+
+        private async Task WhenAnyBatchWithCancellation() { // can cancel the rest of tasks if found needed result
+            using var cts = new CancellationTokenSource();
+            var tasks = new Task<int>[] {
+                Task.Run(async () => {
+                    await Task.Delay(1000, cts.Token);
+                    Console.WriteLine("First");
+                    return 1;
+                }, cts.Token),
+                Task.Run(async () => {
+                    await Task.Delay(1500, cts.Token);
+                    Console.WriteLine("Second");
+                    return 2;
+                }, cts.Token)
+            };
+
+            var firstResultTask = await Task.WhenAny(tasks);
+            var result = await firstResultTask;
+            cts.Cancel();
+            await Console.Out.WriteLineAsync(result.ToString());
+        }
+
+        private async Task InvokeExceptionBatchAsync() {
+            var tasks = new Task<int>[] {
+                Task.Run<int>(() => {
+                    throw new ArgumentException("First exception");
+                    return 1;
+                }),
+                Task.Run<int>(() => {
+                    throw new NullReferenceException("Second exception");
+                    return 2;
+                }),
+                Task.FromResult(100)
+            };
+            try {
+                var resultTask = Task.WhenAll(tasks);
+                var result = await resultTask;
+            } catch (Exception ex) { // have only one exception here (First exception)
+                foreach (var task in tasks.Where(s => s.Status == TaskStatus.Faulted)) {
+                    Console.WriteLine(task.Exception.Message);
+                }
+
+                foreach (var task in tasks.Where(s => s.IsCompletedSuccessfully)) {
+                    Console.WriteLine(task.Result);
+                }
+            }
+        }
+
+        private async Task InvokeExceptionsAsync() {
+            try {
+                await Task.Run(() => {
+                    throw new Exception("From task.....");
+                });
             } catch (Exception ex) {
 
             }
         }
 
+        private async Task TaskDelayAsync() {
+            using var cts = new CancellationTokenSource();
+            var task = Task.Run(async () => {
+                await Task.Delay(5000);
+                cts.Cancel();
+            });
+            Console.WriteLine("Task started");
+            await Task.Delay(10000, cts.Token);
+            Console.WriteLine("Task ended");
+            await task;
+        }
 
+        private async Task TaskCompletionSourceCaseAsync() {
+            var tsc = new TaskCompletionSource<int>();
+            var task = tsc.Task;
+            tsc.SetResult(1);
+            Console.WriteLine(await task);
+        }
+
+        private async Task WhenAllAsync() {
+            var task = Task.WhenAll(
+                Task.FromResult(1),
+                Task.FromResult(2)
+            );
+            var result = await task;
+            result.ToList().ForEach(s => Console.WriteLine(s));
+        }
+
+        private Task HandleListByChildTasksAsync() {
+            var list = new List<int> { 1, 2, 3, 4 };
+            var mainProcessingTask = Task.Run(() => {
+                for (var i = 0; i < list.Count; i++) {
+                    Task.Factory.StartNew(async () => {
+                        await Task.Delay(1000);
+                        await Console.Out.WriteLineAsync($"{list[i]} has been handled.");
+                    });
+                }
+                Console.WriteLine("asdasd");
+            });
+
+            return mainProcessingTask;
+        }
+
+        private async Task GetPersonByContinuationAsync() {
+            var getPersonTask = Task.Run(() => new Person { })
+                .ContinueWith(task => {
+                    task.Result.Id = 1;
+                    throw new Exception("From first continue task");
+                    return task.Result;
+                })
+                .ContinueWith(task => {
+                    if (!task.IsCompletedSuccessfully) {
+                        throw new Exception("From second continue task");
+                    }
+                    task.Result.Name = "Zheka";
+                    return task.Result;
+                });
+
+            var result = await getPersonTask;
+        }
+
+        private async Task ExecuteTasksAsync() {
+            var task = new Task(async () => {
+                await Task.Delay(1000);
+                Console.WriteLine("End");
+            });
+            task.Start();
+            await task;
+            Console.WriteLine("Method ends");
+        }
+
+        private async Task ExecuteWithValue() {
+            var task = Task.Run(async () => {
+                await Task.Delay(2000);
+                return 2;
+            });
+
+            Console.Out.WriteLineAsync(task.Result.ToString());
+            await Console.Out.WriteLineAsync("End");
+        }
 
         private async Task GetNumbersAsync(CancellationToken token) {
             int counter = 0;
@@ -39,7 +218,7 @@ namespace Education.Cases.AsyncProgramming
             int counter = 0;
 
             return Task.Run(async () => {
-                while(true) {
+                while (true) {
                     await Task.Delay(1000);
                     Console.WriteLine(++counter);
                     token.ThrowIfCancellationRequested();
@@ -106,5 +285,11 @@ namespace Education.Cases.AsyncProgramming
             }
         }
 
+    }
+
+    public class Person
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
