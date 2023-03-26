@@ -14,8 +14,41 @@ namespace Education.Cases.AsyncProgramming.TasksCase
     public class TasksCase : ICase
     {
         public async Task RunAsync() {
-            var task = ThrowIfRequestedInTaskAsync();
+            var task = InvokeContinuationExceptionAsync();
             await task;
+        }
+
+        private async Task InvokeContinuationExceptionAsync() {
+            Task<int> task = Task.Run(
+            () => {
+                Console.WriteLine($"Executing task {Task.CurrentId}");
+                throw new Exception("From main task");
+                return 54;
+            });
+
+            var continuation = task.ContinueWith(
+                antecedent => {
+                    Console.WriteLine($"Executing continuation task {Task.CurrentId}");
+                    //Console.WriteLine($"Value from antecedent: {antecedent.Result}");
+
+                    throw new InvalidOperationException();
+                });
+
+            try {
+                var resultTask = Task.WhenAll(task, continuation);
+                await resultTask;
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task SeparateContinuationTasksAsync() {
+            var task = Task.Run(() => { Console.WriteLine("Main task completed"); });
+            var continuation1 = task.ContinueWith(t => { Console.WriteLine("First continutation"); });
+            var continuation2 = task.ContinueWith(t => { Console.WriteLine("Second continutation"); });
+            await task;
+            await Task.WhenAll(continuation1, continuation2);
         }
 
         private async Task ThrowIfRequestedInTaskAsync() {
@@ -37,13 +70,28 @@ namespace Education.Cases.AsyncProgramming.TasksCase
         }
 
         private async Task InvokeTaskContinuationOptionsAsync() {
-            var task = Task.Run(() => {
+            var task = Task.Run<int>(() => {
                 throw new Exception();
-            }).ContinueWith(t => {
-                Console.WriteLine("Faulted 123");
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                return 1;
+            });
+            var continuation = task.ContinueWith(t => { // if continuation task does not rise exception so source exception is not propogated
+                // outside continuation task.
+                // here t.Exception is not null as continuation is OnlyOnFaulted
+                Console.WriteLine("Faulted case");
+            }, TaskContinuationOptions.OnlyOnFaulted)
+            .ContinueWith(t => {
+                Console.WriteLine("Continuation success");
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            //  If the condition isn't true when the antecedent is ready to invoke the continuation,
+            //  the continuation transitions directly to the TaskStatus.Canceled state and can't be started later.
             // TaskContinuationOptions.OnlyOnCanceled
+            var onSuccessContinuation = task.ContinueWith(t => {
+                Console.WriteLine("Success");
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
             await task;
+            await continuation; // it would be better to create chain and configure all possible variations through 
+            // task chain
+            await onSuccessContinuation;
         }
 
         private async Task RemoveTaskAsItCompletesAsync() { // handle date asap
@@ -70,6 +118,10 @@ namespace Education.Cases.AsyncProgramming.TasksCase
 
         private async Task WhenAnyBatchWithCancellation() { // can cancel the rest of tasks if found needed result
             using var cts = new CancellationTokenSource();
+            Task.Run(async () => {
+                await Task.Delay(500);
+            });
+                cts.Cancel();
             var tasks = new Task<int>[] {
                 Task.Run(async () => {
                     await Task.Delay(1000, cts.Token);
