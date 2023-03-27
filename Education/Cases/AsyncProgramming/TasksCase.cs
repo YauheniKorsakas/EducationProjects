@@ -39,6 +39,8 @@ namespace Education.Cases.AsyncProgramming.TasksCase
                 await resultTask;
             }
             catch (Exception ex) {
+                // throw new AggregateException(task.Exception, continuation.Exception); // can propogate as a group
+
                 Console.WriteLine(ex.Message);
             }
         }
