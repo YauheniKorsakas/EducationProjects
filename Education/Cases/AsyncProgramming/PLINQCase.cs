@@ -1,11 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using Education.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Education.Cases.AsyncProgramming
