@@ -1,6 +1,7 @@
 ﻿using Education.Core;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Education.Cases.AsyncProgramming
     {
         public async Task RunAsync() {
             Console.WriteLine(System.Environment.ProcessorCount);
+            var h = new HashSet<int>();
+            var s = new int[] { };
         }
     
         private async Task Invoke() {

@@ -10,7 +10,7 @@ namespace Education
     {
         public static async Task Main(string[] args)
         {
-            await CaseRunner.RunCaseAsync<ExceptionsCase>();
+            await CaseRunner.RunCaseAsync<PLINQCase>();
             
             Console.ReadKey();
         }
