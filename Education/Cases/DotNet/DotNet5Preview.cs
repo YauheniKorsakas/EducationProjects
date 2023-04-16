@@ -5,17 +5,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Education.Cases
+namespace Education.Cases.DotNet
 {
     public class DotNet5Preview : ICase
     {
-        public Task RunAsync() {
+        public Task RunAsync()
+        {
             LinqMethods();
 
             return Task.CompletedTask;
         }
 
-        private void Records() {
+        private void Records()
+        {
             // var predicate = (Person p) => p.Name is not null; 
             var header = new Header("title", "yauheni kors") { SupportContact = string.Empty };
             var header1 = new Header("title", "yauheni kors");
@@ -24,50 +26,60 @@ namespace Education.Cases
             Console.WriteLine(header == header1);
         }
 
-        private void Operators() {
+        private void Operators()
+        {
             var name = "zheka";
 
-            if (name is { Length: > 5 }) {
+            if (name is { Length: > 5 })
+            {
 
             }
 
             var validNames = GetNames() is var names && names.Count() == 3;
         }
 
-        private void Ranges() {
+        private void Ranges()
+        {
             Range itemsToHandle = 4..;
             var cars = GetCars();
-            var grouped = cars.GroupBy(car => car.HP switch {
+            var grouped = cars.GroupBy(car => car.HP switch
+            {
                 <= 100 => "low",
                 <= 200 => "mid",
                 <= 300 => "high"
             });
 
-            foreach (var group in grouped) {
+            foreach (var group in grouped)
+            {
                 Console.WriteLine(group.Key);
-                
-                foreach (var car in group) {
+
+                foreach (var car in group)
+                {
                     Console.WriteLine(car.Name);
                 }
                 Console.WriteLine();
             }
         }
 
-        private void Patterns() {
+        private void Patterns()
+        {
             var person = new Person();
-            var isValidPerson = person switch {
+            var isValidPerson = person switch
+            {
                 { Name: "Zheka" } => true,
                 _ => false
             };
 
             var (age, exp) = (26, 5);
 
-            var isItGood = (age, exp) switch {
+            var isItGood = (age, exp) switch
+            {
                 ( > 25, > 3) => true
             };
         }
 
-        private void LinqMethods() {
+        private void LinqMethods()
+        {
             var a = 1;
             List<string> titles = new() {
                 "zheka",
@@ -92,7 +104,8 @@ namespace Education.Cases
             //}
         }
 
-        private IEnumerable<string> GetGuids() {
+        private IEnumerable<string> GetGuids()
+        {
             var count = (int)Math.Pow(10, 6);
             var guid = Guid.NewGuid().ToString();
 

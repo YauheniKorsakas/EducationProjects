@@ -11,9 +11,7 @@ namespace Education.Cases.AsyncProgramming
     internal class ParallelCase : ICase
     {
         public async Task RunAsync() {
-            Console.WriteLine(System.Environment.ProcessorCount);
-            var h = new HashSet<int>();
-            var s = new int[] { };
+            await InvokeLocalStateAsync();
         }
     
         private async Task Invoke() {
@@ -76,6 +74,7 @@ namespace Education.Cases.AsyncProgramming
                 finalResult => {
                     Console.WriteLine("Per partition");
                     Interlocked.Add(ref total, finalResult); // function that is invoked on each result of each partition
+                    // can use without interlocked as its not parallel invokation.
                 });
             await Console.Out.WriteLineAsync(total.ToString());
         }
@@ -90,7 +89,7 @@ namespace Education.Cases.AsyncProgramming
                 subtotal += nums[j];
                 return subtotal;
             },
-                (x) => Interlocked.Add(ref total, x)
+                (x) => total += x //Interlocked.Add(ref total, x)
             );
             await Console.Out.WriteLineAsync(total.ToString());
         }
@@ -98,15 +97,13 @@ namespace Education.Cases.AsyncProgramming
         private async Task InvokeParallelIterationAsync() {
             var data = Enumerable.Range(0, 10);
             using var cts = new CancellationTokenSource();
-            var result = Parallel.For(0, data.Count(), new ParallelOptions {
+            Parallel.For(0, data.Count(), new ParallelOptions {
                 CancellationToken = cts.Token,
-                MaxDegreeOfParallelism = 1
-            }, async (item, loop)=> {
-                await Task.Delay(2000);
+                MaxDegreeOfParallelism = 2
+            }, async (item, loop) => {
+                await Task.Delay(1000);
                 await Console.Out.WriteLineAsync(item.ToString());
             });
-
-            await Task.Delay(10000);
         }
     }
 }

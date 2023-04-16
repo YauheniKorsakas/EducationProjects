@@ -22,8 +22,6 @@ namespace Education.Forms
             await Task.Factory.StartNew(() => {
                 button.Text = "changed";
             }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
-            await Task.Delay(500);
-            button.Text = "ch";
         }
     }
 }

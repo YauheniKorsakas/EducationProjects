@@ -27,6 +27,9 @@ namespace Education.Cases.AsyncProgramming
             var firstTask = Task.Run(() => {
                 for (var i = 0; i < 5; i++) {
                     concBag.Add(i);
+                    lock (syncObj) {
+                        counter++;
+                    }
                     Interlocked.Increment(ref counter);
                 }
             });

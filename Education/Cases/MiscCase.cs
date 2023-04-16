@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace Education.Cases.Misc
 {
-    public class MiscCase : ICase
-    {
+    public class MiscCase : ICase {
         public async Task RunAsync() {
-            var list = new List<int> { 1, 2, 3 };
-            var cast = list.AsReadOnly();
-            var isItReadonly = cast is IReadOnlyCollection<int>;
-            list[0] = 100;
-            foreach (var item in cast) {
-                Console.WriteLine(item);
-            }
+            using var disposable = new Disposable();
+            throw new Exception();
+        }
+    }
+
+    public class Disposable : IDisposable {
+        public void Dispose() {
+            Console.WriteLine("Disposed");
         }
     }
 }

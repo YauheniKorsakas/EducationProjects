@@ -14,8 +14,8 @@ namespace Education.Cases.AsyncProgramming.TasksCase
     public class TasksCase : ICase
     {
         public async Task RunAsync() {
-            var task = InvokeContinuationExceptionAsync();
-            await task;
+            //var task = InvokeCancelledTaskContinuationAsync();
+            //await task;
         }
 
         private async Task InvokeContinuationExceptionAsync() {
@@ -51,6 +51,10 @@ namespace Education.Cases.AsyncProgramming.TasksCase
             var continuation2 = task.ContinueWith(t => { Console.WriteLine("Second continutation"); });
             await task;
             await Task.WhenAll(continuation1, continuation2);
+            var fromExceptionTask = Task.FromException(new Exception());
+            await fromExceptionTask.ContinueWith(t => {
+                Console.WriteLine("After from exception");
+            });
         }
 
         private async Task ThrowIfRequestedInTaskAsync() {
@@ -128,6 +132,7 @@ namespace Education.Cases.AsyncProgramming.TasksCase
                 Task.Run(async () => {
                     await Task.Delay(1000, cts.Token);
                     Console.WriteLine("First");
+                    cts.Token.ThrowIfCancellationRequested();
                     return 1;
                 }, cts.Token),
                 Task.Run(async () => {

@@ -19,7 +19,7 @@ namespace Education.Cases.AsyncProgramming
     public class ChildTasksCase : ICase
     {
         public async Task RunAsync() {
-            await InvokeRunAsync();
+            await InvokeChildWithAwaitAsync();
         }
 
         private async Task RunManyChildsAsync() {
@@ -55,7 +55,7 @@ namespace Education.Cases.AsyncProgramming
 
         private async Task InvokeTaskFactoryAsync() {
             var mainTask = Task.Factory.StartNew(async () => {
-                await Task.Delay(500);
+                // await Task.Delay(500);
                 Console.WriteLine("Main");
 
                 var child = Task.Factory.StartNew(async () => {
@@ -63,7 +63,7 @@ namespace Education.Cases.AsyncProgramming
                     await Console.Out.WriteLineAsync("Child task");
                     return 1;
                 }, TaskCreationOptions.AttachedToParent);
-            }, TaskCreationOptions.DenyChildAttach);
+            });
 
             var res = await mainTask;
             await Console.Out.WriteLineAsync(res.Status.ToString());

@@ -66,7 +66,7 @@ namespace Education.Cases.Patterns.Behavioral.Visitor
                 Console.WriteLine($"\n{hotelService.GetType().Name} is applying...");
 
                 foreach (var room in rooms) {
-                    hotelService?.Visit(room);
+                    room.Accept(hotelService);
                 }
             }
         }
