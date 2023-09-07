@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Education.Cases.Patterns.Behavioral.Command
 {
-    public class CommandCase : ICase
+    public class CQRSCase : ICase
     {
         public async Task RunAsync() {
             var zheka = new Person { Name = "zheka" };
