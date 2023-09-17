@@ -41,7 +41,7 @@ namespace NLayer.Business.Handlers.Command
             }
         }
 
-        private void  CreateOrder(OrderCreateDto order) {
+        private void CreateOrder(OrderCreateDto order) {
             var newOrder = new Order {
                 CustomerId = order.CustomerId,
                 ItemOrders = order.Items
